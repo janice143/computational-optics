@@ -1,6 +1,11 @@
 
 # Introduction
 
+> [!info] Code
+> The runnable Python code for every experiment in this article (Fresnel / Fraunhofer / Angular Spectrum implementations, common numerical setup, central cross-section comparison, MSE error analysis) lives in
+> [`numerical-simulation/three-propagation-models-clean-version.py`](numerical-simulation/three-propagation-models-clean-version.py),
+> in the same repository.
+
 Light is fundamentally an electromagnetic wave. Its behavior is governed by Maxwell’s equations, which describe how electric and magnetic fields evolve and interact in space and time. In a homogeneous, source-free medium, Maxwell’s equations lead to the electromagnetic wave equation,
 
 $$

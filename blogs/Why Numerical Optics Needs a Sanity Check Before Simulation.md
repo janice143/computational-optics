@@ -5,6 +5,7 @@ description: "An ablation study showing how FFT grid size and sampling can domin
 date: 2026-08-30
 author: "Yanping Lan"
 categories: [wave optics, numerical methods, debugging, Python]
+image: ../assets/figures/sanity-check/mse-n512.png
 toc: true
 toc-depth: 3
 code-fold: show
@@ -62,10 +63,10 @@ $$
 
 The same field was propagated over several distances, and the normalized central intensity profiles were compared in **Figure 1**.
 
-![[Pasted image 20260830005446.png]]
+![](../assets/figures/sanity-check/propagation-n512-z001mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=1 mm with N=512."}
 
-![[Pasted image 20260830005440.png]]
-![[Pasted image 20260830005425.png]]
+![](../assets/figures/sanity-check/propagation-n512-z010mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=10 mm with N=512."}
+![](../assets/figures/sanity-check/propagation-n512-z100mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=100 mm with N=512."}
 **Figure 1** compares the three propagation models at three representative distances. Each column corresponds to one propagation method—ASM, Fresnel, and Fraunhofer—while the three rows represent near-field ($z=1\,\mathrm{mm}$), transitional ($z=10\,\mathrm{mm}$), and far-field ($z=100\,\mathrm{mm}$) propagation.
 
 At $z=1\,\mathrm{mm}$, ASM and Fresnel give nearly identical compact diffraction patterns, while the Fraunhofer model is not expected to be valid in this near-field regime. At $z=10\,\mathrm{mm}$, the ASM and Fresnel fields begin to spread and develop clearer diffraction structure, indicating the transition toward the far field.
@@ -82,7 +83,7 @@ These observations suggested that the unexpected far-field behavior was caused n
 
 
 
-![[Pasted image 20260830010347.png]]
+![](../assets/figures/sanity-check/mse-n512.png){fig-alt="MSE vs distance for ASM vs Fresnel and Fresnel vs Fraunhofer with N=512."}
 **Figure 2**. MSE between normalized central intensity profiles for ASM vs Fresnel and Fresnel vs Fraunhofer using the original $N=512$ grid. The unexpected increase in the Fresnel–Fraunhofer error at $z=100\,\mathrm{mm}$ indicates that numerical limitations begin to contaminate the far-field comparison.
 
 Figure 2 shows the MSE between the normalized central intensity profiles produced by the three propagation models. ASM and Fresnel remain close at all three propagation distances, although their difference increases slightly at $z=100\,\mathrm{mm}$.  
@@ -90,44 +91,6 @@ Figure 2 shows the MSE between the normalized central intensity profiles produce
 The Fresnel–Fraunhofer comparison shows a more suspicious trend. The error is large at $z=1\,\mathrm{mm}$, drops to nearly zero at $z=10\,\mathrm{mm}$, but then increases again at $z=100\,\mathrm{mm}$. The large error in the near field is expected because the Fraunhofer approximation is not valid there. However, the increase at $100\,\mathrm{mm}$ is unexpected: as the propagation enters the far-field regime, Fraunhofer diffraction should approach the Fresnel result rather than diverge from it.
 
 Together with the truncated field observed in Figure 1, this rebound suggests that the error at large propagation distance is dominated by the numerical representation rather than by the physical approximation itself. This motivated a closer examination of the computational window and spatial-frequency sampling.
-
-对，后半段现在最大的问题不是内容错，而是从 Figure 2 之后突然变成了“教材式介绍 sampling”，把前面已经建立起来的故事线打断了。
-
-而且有一个地方应该收紧：你目前通过 $N=512\rightarrow1024$ 的实验只能确定“原来的 numerical grid 不够稳定”，但因为这个操作同时改变了
-
-$$
-L=N\Delta x
-$$
-
-和
-
-$$
-\Delta f=\frac{1}{N\Delta x},
-$$
-
-还不能单独证明到底是 window size 还是 frequency resolution 哪一个占主导。所以文章最好不要过早下结论说就是 wrap-around 或 frequency undersampling。
-
-我建议 Figure 2 后直接变成这个逻辑：
-
-$$
-\boxed{
-\text{abnormal result}
-\rightarrow
-\text{check physical scale}
-\rightarrow
-\text{inspect numerical grid}
-\rightarrow
-\text{change }N
-\rightarrow
-\text{compare again}
-\rightarrow
-\text{generalize into sanity check}
-}
-$$
-
-下面这部分可以直接替换你现在的 Section 2–8。
-
----
 
 ## 2. Diagnosing the Problem
 
@@ -313,9 +276,9 @@ $$
 
 is reduced by a factor of two.
 
-![[Pasted image 20260830011858.png]]
-![[Pasted image 20260830011910.png]]
-![[Pasted image 20260830011916.png]]
+![](../assets/figures/sanity-check/propagation-n1024-z001mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=1 mm with N=1024."}
+![](../assets/figures/sanity-check/propagation-n1024-z010mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=10 mm with N=1024."}
+![](../assets/figures/sanity-check/propagation-n1024-z100mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity at z=100 mm with N=1024."}
 **Figure 3**. Propagation results after increasing the grid size from $N=512$ to $N=1024$ while keeping $\Delta x$, wavelength, aperture size, and propagation distances unchanged. At $z=100\,\mathrm{mm}$, the ASM and Fresnel fields are now contained within the computational window and show substantially better agreement than in Figure 1.
 
 Figure 3 shows the same propagation experiment repeated with $N=1024$, while keeping the physical parameters and spatial sampling interval $\Delta x$ unchanged. Compared with Figure 1, the most visible improvement occurs at $z=100\,\mathrm{mm}$. The ASM and Fresnel fields now fit comfortably inside the enlarged computational window instead of extending to the boundaries. Their overall diffraction envelopes also agree closely, with only weak residual grid-like structures remaining.
@@ -339,7 +302,7 @@ by a factor of two. The improved result therefore indicates that the abnormal fa
 The central intensity profiles were then recomputed using the larger grid.
 
 
-![[Pasted image 20260830011955.png]]
+![](../assets/figures/sanity-check/profiles-n1024.png){fig-alt="Central intensity profiles for ASM, Fresnel, and Fraunhofer at three propagation distances with N=1024."}
 **Figure 4**. Normalized central intensity profiles for ASM, Fresnel, and Fraunhofer propagation using $N=1024$. From left to right, the propagation distance increases from $1\,\mathrm{mm}$ to $100\,\mathrm{mm}$. Fraunhofer diffraction differs strongly in the near field but progressively approaches the Fresnel result as the system enters the far-field regime.
 
 Figure 4 compares the normalized central intensity profiles after increasing the grid size to $N=1024$. The three panels correspond to $z=1\,\mathrm{mm}$, $10\,\mathrm{mm}$, and $100\,\mathrm{mm}$, respectively.
@@ -360,13 +323,13 @@ $$
 
 Compared with the original $N=512$ simulation, the corrected profiles also show that the large discrepancy observed at $z=100\,\mathrm{mm}$ was strongly influenced by the numerical grid rather than by the propagation models themselves.
 
-![[Pasted image 20260830012407.png]]
+![](../assets/figures/sanity-check/profiles-n512.png){fig-alt="Central intensity profiles for ASM, Fresnel, and Fraunhofer at three propagation distances with N=512."}
 **Figure 5**. Normalized central intensity profiles for ASM, Fresnel, and Fraunhofer propagation using $N=512$. From left to right, the propagation distance increases from $1\,\mathrm{mm}$ to $100\,\mathrm{mm}$. 
 
 
 The corresponding MSE comparison also becomes more physically interpretable.
 
-![[Pasted image 20260830012010.png]]
+![](../assets/figures/sanity-check/mse-n1024.png){fig-alt="MSE vs distance for ASM vs Fresnel and Fresnel vs Fraunhofer with N=1024."}
 **Figure 6**. MSE between normalized central intensity profiles using $N=1024$. ASM and Fresnel remain closely matched over the tested propagation distances, while the Fresnel–Fraunhofer discrepancy decreases strongly as the field approaches the far-field regime. The small residual increase at $z=100\,\mathrm{mm}$ is substantially lower than that obtained with the original $N=512$ grid.
 
 Figure 6 shows the MSE between the normalized central intensity profiles after increasing the grid size to $N=1024$.

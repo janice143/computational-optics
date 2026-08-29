@@ -63,7 +63,7 @@ subtitle: "Optional subtitle"
 description: "A short summary used by the article listing."
 date: 2026-08-28
 categories: [wave optics, Python]
-image: ../assets/figures/example.png
+image: ../assets/figures/<article-abbreviation>/example.png
 ---
 ```
 
@@ -86,7 +86,7 @@ Generate all figures used by the current propagation article:
 
 ```bash
 python numerical-simulation/three-propagation-models-clean-version.py \
-  --output-dir assets/figures
+  --output-dir assets/figures/wave-propagation
 ```
 
 To run the simulation interactively and display the Matplotlib windows instead:
@@ -113,7 +113,7 @@ computational-optics/
 │   ├── propagation/           # ASM, two Fresnel forms, and Fraunhofer
 │   ├── comparison/            # Interpolation and error metrics
 │   └── three-propagation-models-clean-version.py
-├── assets/figures/            # Generated figures used by articles
+├── assets/figures/            # Generated figures used by articles, one subdir per blog post
 ├── tests/                      # Numerical-module unit tests
 ├── requirements.txt           # Python simulation dependencies
 └── .github/workflows/         # GitHub Pages publishing workflow
@@ -142,4 +142,4 @@ https://janice143.github.io/computational-optics/
 - `quarto: command not found`: restart the terminal after installation, then run `quarto --version`.
 - Preview port already in use: choose another port, for example `quarto preview --port 4201`.
 - A global configuration change is not visible: stop the preview and restart it with `quarto preview --render all`.
-- A figure does not render: check that its path is relative to the article file and that the file exists under `assets/figures/`.
+- A figure does not render: check that its path is relative to the article file and that the file exists under `assets/figures/<article-abbreviation>/`.

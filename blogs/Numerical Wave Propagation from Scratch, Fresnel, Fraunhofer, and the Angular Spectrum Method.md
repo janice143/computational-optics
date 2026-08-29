@@ -5,7 +5,7 @@ description: "Derive three scalar propagation models, implement them with FFTs, 
 date: 2026-08-28
 author: "Yanping Lan"
 categories: [wave optics, diffraction, Python, FFT]
-image: ../assets/figures/propagation-010mm.png
+image: ../assets/figures/wave-propagation/propagation-010mm.png
 toc: true
 toc-depth: 3
 number-sections: true
@@ -879,7 +879,7 @@ U0 = (
 
 The same `U0` is passed to all three propagation functions.
 
-![The common square-aperture input field used by all three propagation models.](../assets/figures/square-aperture.png){fig-alt="A binary square aperture centred on the numerical grid."}
+![The common square-aperture input field used by all three propagation models.](../assets/figures/wave-propagation/square-aperture.png){fig-alt="A binary square aperture centred on the numerical grid."}
 
 
 ---
@@ -1016,11 +1016,11 @@ $$
 
 The important point is that these agreements are not properties of the algorithms themselves. They occur only when the physical assumptions used to derive the approximations are satisfied.
 
-![Propagation-model comparison at $z=1\ \mathrm{mm}$.](../assets/figures/propagation-001mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one millimetre."}
+![Propagation-model comparison at $z=1\ \mathrm{mm}$.](../assets/figures/wave-propagation/propagation-001mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one millimetre."}
 
-![Propagation-model comparison at $z=10\ \mathrm{mm}$.](../assets/figures/propagation-010mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at ten millimetres."}
+![Propagation-model comparison at $z=10\ \mathrm{mm}$.](../assets/figures/wave-propagation/propagation-010mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at ten millimetres."}
 
-![Propagation-model comparison at $z=100\ \mathrm{mm}$.](../assets/figures/propagation-100mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one hundred millimetres."}
+![Propagation-model comparison at $z=100\ \mathrm{mm}$.](../assets/figures/wave-propagation/propagation-100mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one hundred millimetres."}
 
 ---
 
@@ -1142,7 +1142,7 @@ Spatial and frequency coordinates are created in [`grids.py`](../numerical-simul
 
 This distinction is easy to miss: two arrays can have the same number of pixels while representing completely different physical positions.
 
-![Central intensity cross-sections compared on their physical coordinates.](../assets/figures/central-cross-sections.png){fig-alt="Three panels comparing central intensity profiles at three propagation distances."}
+![Central intensity cross-sections compared on their physical coordinates.](../assets/figures/wave-propagation/central-cross-sections.png){fig-alt="Three panels comparing central intensity profiles at three propagation distances."}
 
 ---
 
@@ -1198,7 +1198,7 @@ into a more precise question:
 
 Ideally, the comparison should show that the discrepancy between ASM and Fresnel becomes small when the angular spectrum is sufficiently paraxial, while the discrepancy between Fresnel and Fraunhofer becomes small as the field enters the far-field regime.
 
-![Normalized central-section MSE across the three tested propagation distances.](../assets/figures/mse-vs-distance.png){fig-alt="A logarithmic distance plot of ASM versus Fresnel and Fresnel versus Fraunhofer MSE."}
+![Normalized central-section MSE across the three tested propagation distances.](../assets/figures/wave-propagation/mse-vs-distance.png){fig-alt="A logarithmic distance plot of ASM versus Fresnel and Fresnel versus Fraunhofer MSE."}
 
 
 ## 3.7 What This Experiment Demonstrates

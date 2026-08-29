@@ -8,6 +8,10 @@ Public API (also re-exported as top-level names):
   ``fresnel_fft``, ``fresnel_tf``
 - :mod:`wave_optics.visualization` — ``visualize``, ``visualize_grid``
 - :mod:`wave_optics.error_metrics` — ``mean_squared_error``
+- :mod:`wave_optics.sanity_check`  — ``propagation_sanity_check`` (the only
+  one that prints), plus the pure helpers ``grid_info``,
+  ``field_support_info``, ``output_grid_info``, ``propagation_regime``,
+  ``representative_distances``
 """
 
 from .grids import make_grid, freq_grid, k_freq_grid
@@ -20,6 +24,14 @@ from .propagation import (
 )
 from .visualization import visualize, visualize_grid
 from .error_metrics import mean_squared_error
+from .sanity_check import (
+    field_support_info,
+    grid_info,
+    output_grid_info,
+    propagation_regime,
+    propagation_sanity_check,
+    representative_distances,
+)
 
 __all__ = [
     "make_grid",
@@ -34,4 +46,10 @@ __all__ = [
     "visualize",
     "visualize_grid",
     "mean_squared_error",
+    "grid_info",
+    "propagation_sanity_check",
+    "field_support_info",
+    "output_grid_info",
+    "propagation_regime",
+    "representative_distances",
 ]

@@ -1,0 +1,19 @@
+---
+title: "Computational Optics Lab"
+subtitle: "Field notes and reproducible numerical experiments in wave optics"
+description: "A working notebook for translating optical models into inspectable Python experiments."
+listing:
+  contents: blogs
+  sort: "date desc"
+  type: grid
+  categories: true
+  feed: true
+  fields: [image, date, title, subtitle, description, categories]
+---
+
+This site collects long-form explanations, numerical implementations, and the evidence needed to check whether a simulation represents the intended physical system.
+
+The current focus is scalar wave propagation: connecting the Helmholtz equation, diffraction approximations, FFT conventions, physical coordinates, and quantitative comparisons in runnable Python.
+
+## Field notes
+

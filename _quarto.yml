@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - blogs/*.md
+    - blogs/*.qmd
+
+website:
+  title: "Computational Optics Lab"
+  site-url: "https://janice143.github.io/computational-optics/"
+  description: "Field notes and reproducible numerical experiments in computational optics."
+  repo-url: "https://github.com/janice143/computational-optics"
+  repo-actions: [source, issue]
+  search: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Field Notes
+    right:
+      - icon: github
+        href: "https://github.com/janice143/computational-optics"
+        aria-label: GitHub repository
+  page-footer:
+    left: "Computational Optics Lab"
+    right: "Built with [Quarto](https://quarto.org/)"
+
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-location: right
+    code-copy: true
+    code-overflow: wrap
+    smooth-scroll: true
+    link-external-newwindow: true
+    html-math-method: katex
+
+execute:
+  freeze: auto
+
+lang: en
+

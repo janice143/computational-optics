@@ -1,10 +1,26 @@
+---
+title: "Numerical Wave Propagation from Scratch"
+subtitle: "Fresnel, Fraunhofer, and the Angular Spectrum Method"
+description: "Derive three scalar propagation models, implement them with FFTs, and compare their approximation regimes and numerical pitfalls."
+date: 2026-08-28
+author: "Yanping Lan"
+categories: [wave optics, diffraction, Python, FFT]
+image: ../assets/figures/propagation-010mm.png
+toc: true
+toc-depth: 3
+number-sections: true
+code-fold: show
+---
 
 # Introduction
 
-> [!info] Code
-> The runnable Python code for every experiment in this article (Fresnel / Fraunhofer / Angular Spectrum implementations, common numerical setup, central cross-section comparison, MSE error analysis) lives in
-> [`numerical-simulation/three-propagation-models-clean-version.py`](numerical-simulation/three-propagation-models-clean-version.py),
-> in the same repository.
+::: {.callout-note title="Runnable code"}
+The code is organized by responsibility:
+
+- Propagation models: [`asm.py`](../numerical-simulation/wave_optics/propagation/asm.py), [`fresnel_tf.py`](../numerical-simulation/wave_optics/propagation/fresnel_tf.py), [`fresnel_fft.py`](../numerical-simulation/wave_optics/propagation/fresnel_fft.py), and [`fraunhofer.py`](../numerical-simulation/wave_optics/propagation/fraunhofer.py).
+- Shared spatial, frequency, and wavevector grids: [`grids.py`](../numerical-simulation/wave_optics/grids.py).
+- Complete runnable experiment and plotting workflow: [`three-propagation-models-clean-version.py`](../numerical-simulation/three-propagation-models-clean-version.py).
+:::
 
 Light is fundamentally an electromagnetic wave. Its behavior is governed by Maxwell’s equations, which describe how electric and magnetic fields evolve and interact in space and time. In a homogeneous, source-free medium, Maxwell’s equations lead to the electromagnetic wave equation,
 
@@ -314,7 +330,7 @@ $$
 A minimal implementation is:
 
 ```python
-def fresnel(U0, z, wavelength, dx, dy):
+def fresnel_tf(U0, z, wavelength, dx, dy):
     Ny, Nx = U0.shape
     k = 2 * np.pi / wavelength
 
@@ -337,6 +353,8 @@ def fresnel(U0, z, wavelength, dx, dy):
 ```
 
 The code mirrors the equation directly. `fft2` decomposes the input field into spatial-frequency components, `H` gives each component the phase accumulated during Fresnel propagation, and `ifft2` reconstructs the propagated field.
+
+The maintained transfer-function implementation is in [`propagation/fresnel_tf.py`](../numerical-simulation/wave_optics/propagation/fresnel_tf.py). A scaled single-FFT formulation, which returns its own physical output coordinates, is available separately in [`propagation/fresnel_fft.py`](../numerical-simulation/wave_optics/propagation/fresnel_fft.py).
 
 ---
 
@@ -515,6 +533,8 @@ def fraunhofer(U0, z, wavelength, dx, dy):
     return Uz, x_out, y_out
 ```
 
+The maintained implementation is in [`propagation/fraunhofer.py`](../numerical-simulation/wave_optics/propagation/fraunhofer.py).
+
 There is an important numerical detail here.
 
 The FFT produces samples in spatial-frequency coordinates,
@@ -674,6 +694,8 @@ def asm(U0, z, wavelength, dx, dy):
     return Uz
 ```
 
+The maintained implementation is in [`propagation/asm.py`](../numerical-simulation/wave_optics/propagation/asm.py).
+
 The `+ 0j` in the square root is intentional.
 
 When
@@ -825,8 +847,8 @@ $$
 A representative numerical configuration is
 
 ```python
-Nx = 512
-Ny = 512
+Nx = 1024
+Ny = 1024
 
 dx = 2e-6
 dy = 2e-6
@@ -856,7 +878,10 @@ U0 = (
 ```
 
 The same `U0` is passed to all three propagation functions.
-![[Pasted image 20260828173517.png]]
+
+![The common square-aperture input field used by all three propagation models.](../assets/figures/square-aperture.png){fig-alt="A binary square aperture centred on the numerical grid."}
+
+
 ---
 
 ## 3.2 Changing Only the Propagation Method
@@ -872,7 +897,7 @@ U_asm = asm(
     dy,
 )
 
-U_fresnel = fresnel(
+U_fresnel = fresnel_tf(
     U0,
     z,
     wavelength,
@@ -990,9 +1015,12 @@ I_{\mathrm{Fraunhofer}}.
 $$
 
 The important point is that these agreements are not properties of the algorithms themselves. They occur only when the physical assumptions used to derive the approximations are satisfied.
-![[Pasted image 20260828174322.png]]
-![[Pasted image 20260828174329.png]]
-![[Pasted image 20260828174336.png]]
+
+![Propagation-model comparison at $z=1\ \mathrm{mm}$.](../assets/figures/propagation-001mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one millimetre."}
+
+![Propagation-model comparison at $z=10\ \mathrm{mm}$.](../assets/figures/propagation-010mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at ten millimetres."}
+
+![Propagation-model comparison at $z=100\ \mathrm{mm}$.](../assets/figures/propagation-100mm.png){fig-alt="ASM, Fresnel, and Fraunhofer intensity patterns at one hundred millimetres."}
 
 ---
 
@@ -1110,9 +1138,11 @@ Instead, the comparison must be performed in physical coordinates.
 
 For example, the Fraunhofer profile can be interpolated onto the same physical $x$-coordinates used for the Fresnel result before computing a quantitative error.
 
+Spatial and frequency coordinates are created in [`grids.py`](../numerical-simulation/wave_optics/grids.py).
+
 This distinction is easy to miss: two arrays can have the same number of pixels while representing completely different physical positions.
 
-![[Pasted image 20260828190531.png]]
+![Central intensity cross-sections compared on their physical coordinates.](../assets/figures/central-cross-sections.png){fig-alt="Three panels comparing central intensity profiles at three propagation distances."}
 
 ---
 
@@ -1156,6 +1186,8 @@ $$
 
 can be measured after both results have been represented on the same physical coordinate grid.
 
+The reusable MSE implementation is in [`error_metrics.py`](../numerical-simulation/wave_optics/error_metrics.py).
+
 This transforms the experiment from
 
 > “the patterns look similar”
@@ -1166,8 +1198,8 @@ into a more precise question:
 
 Ideally, the comparison should show that the discrepancy between ASM and Fresnel becomes small when the angular spectrum is sufficiently paraxial, while the discrepancy between Fresnel and Fraunhofer becomes small as the field enters the far-field regime.
 
-![[Pasted image 20260828190636.png]]
----
+![Normalized central-section MSE across the three tested propagation distances.](../assets/figures/mse-vs-distance.png){fig-alt="A logarithmic distance plot of ASM versus Fresnel and Fresnel versus Fraunhofer MSE."}
+
 
 ## 3.7 What This Experiment Demonstrates
 
@@ -1576,7 +1608,7 @@ $$
 This means that two arrays with shape
 
 ```text
-512 × 512
+1024 × 1024
 ```
 
 do not necessarily describe the same physical region.

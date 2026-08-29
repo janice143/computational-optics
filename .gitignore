@@ -1,3 +1,12 @@
 node_modules/
 dist/
 .DS_Store
+/.quarto/
+/_site/
+/.venv/
+__pycache__/
+
+**/*.quarto_ipynb
+
+# Claude Code local session state (per-machine permissions / settings)
+.claude/settings.local.json

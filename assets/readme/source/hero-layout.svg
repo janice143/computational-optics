@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hero layout for computational-optics-lab README.
+
+  Purpose: project-native composition that combines the repository title with
+  real simulation output (ASM / Fresnel / Fraunhofer propagation panels at
+  z = 10 mm and the MSE-vs-distance evidence curve).
+
+  This SVG is the editable design source. The published README asset is the
+  composed raster hero.png, rendered by source/render_hero.py using Pillow.
+  Keep typography, copy, and layout decisions in this file in sync with the
+  Python script.
+
+  Canvas:   1200 x 420 (matches README full-width preview)
+  Type:     Helvetica Neue (Regular + Bold) for display, SF Mono for metadata
+  Palette:  paper #FAF8F3 / ink #0E1116 / amber #B45309 / muted #6B7280 / rule #D7D2C6
+
+  HelveticaNeue.ttc face indices:
+    0 Regular, 1 Bold, 2 Italic, 3 Bold Italic
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200" height="440" viewBox="0 0 1200 440"
+     role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">Computational Optics Lab</title>
+  <desc id="hero-desc">Title block on the left and a composed scene on the right showing three scalar diffraction propagation models (Angular Spectrum Method, Fresnel, Fraunhofer) at z = 10 mm, plus the mean-squared-error evidence curve against propagation distance.</desc>
+
+  <!-- Paper background -->
+  <rect x="0" y="0" width="1200" height="440" fill="#FAF8F3" />
+
+  <!-- Top hairline -->
+  <line x1="48" y1="40" x2="1152" y2="40" stroke="#D7D2C6" stroke-width="1" />
+
+  <!-- ============ LEFT: title block (x = 48..620) ============ -->
+
+  <!-- Category eyebrow -->
+  <text x="48" y="72"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="13" letter-spacing="2.2" fill="#6B7280">
+    WAVE OPTICS &#183; FIELD NOTES
+  </text>
+
+  <!-- Repository name (display, two lines, Bold) -->
+  <text x="48" y="138"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="46" font-weight="700" fill="#0E1116">
+    Computational
+  </text>
+  <text x="48" y="190"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="46" font-weight="700" fill="#0E1116">
+    Optics Lab
+  </text>
+
+  <!-- One-sentence promise (body, Regular) -->
+  <text x="48" y="240"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="18" font-weight="400" fill="#0E1116">
+    Runnable Python experiments that translate scalar
+  </text>
+  <text x="48" y="264"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="18" font-weight="400" fill="#0E1116">
+    diffraction models into inspectable simulations &#8212;
+  </text>
+  <text x="48" y="288"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="18" font-weight="400" fill="#0E1116">
+    with the evidence to know when the output represents
+  </text>
+  <text x="48" y="312"
+        font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif"
+        font-size="18" font-weight="400" fill="#0E1116">
+    the intended physics.
+  </text>
+
+  <!-- Tag chips -->
+  <text x="48" y="358"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="12" letter-spacing="1.4" fill="#B45309">
+    Helmholtz &#183; FFT grids &#183; quantitative evidence
+  </text>
+
+  <!-- Published site link -->
+  <text x="48" y="395"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="12" letter-spacing="0.4" fill="#6B7280">
+    Published: janice143.github.io/computational-optics
+  </text>
+
+  <!-- ============ RIGHT: proof scene (x = 660..1152) ============ -->
+
+  <!-- Right-side eyebrow -->
+  <text x="660" y="72"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="11" letter-spacing="1.8" fill="#6B7280">
+    PROPAGATION AT z = 10 mm
+  </text>
+
+  <!-- Propagation panels frame -->
+  <rect x="660" y="82" width="492" height="150" fill="#0A0A0A" />
+
+  <!-- Caption strip below the propagation panels -->
+  <text x="660" y="248"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="11" letter-spacing="1.4" fill="#6B7280">
+    ASM &#183; FRESNEL &#183; FRAUNHOFER
+  </text>
+
+  <!-- MSE plot card frame (drawn explicitly because the plot has a white bg) -->
+  <rect x="660" y="266" width="492" height="144" fill="#FFFFFF" />
+
+  <!-- Caption strip below the MSE plot -->
+  <text x="660" y="426"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="11" letter-spacing="1.4" fill="#6B7280">
+    MSE vs PROPAGATION DISTANCE z
+  </text>
+</svg>

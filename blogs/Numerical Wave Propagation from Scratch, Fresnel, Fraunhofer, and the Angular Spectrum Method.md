@@ -15,7 +15,7 @@ code-fold: show
 # Introduction
 
 ::: {.callout-note title="Runnable code"}
-The code is organized by responsibility:
+The complete project is available in the [GitHub repository](https://github.com/janice143/computational-optics). The code is organized by responsibility:
 
 - Propagation models: [`asm.py`](../numerical-simulation/wave_optics/propagation/asm.py), [`fresnel_tf.py`](../numerical-simulation/wave_optics/propagation/fresnel_tf.py), [`fresnel_fft.py`](../numerical-simulation/wave_optics/propagation/fresnel_fft.py), and [`fraunhofer.py`](../numerical-simulation/wave_optics/propagation/fraunhofer.py).
 - Shared spatial, frequency, and wavevector grids: [`grids.py`](../numerical-simulation/wave_optics/grids.py).

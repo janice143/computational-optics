@@ -12,7 +12,7 @@ code-fold: show
 ---
 
 ::: {.callout-note title="Runnable code"}
-The code is organized by responsibility:
+The complete project is available in the [GitHub repository](https://github.com/janice143/computational-optics). The code is organized by responsibility:
 
 - One-shot sanity report: [`propagation_sanity_check.py`](../numerical-simulation/wave_optics/sanity_check/propagation_sanity_check.py).
 - Pure helpers (no print): [`grid_sanity_check.py`](../numerical-simulation/wave_optics/sanity_check/grid_sanity_check.py), [`field_support_info.py`](../numerical-simulation/wave_optics/sanity_check/field_support_info.py), [`output_grid_info.py`](../numerical-simulation/wave_optics/sanity_check/output_grid_info.py), and [`propagation_regime.py`](../numerical-simulation/wave_optics/sanity_check/propagation_regime.py).

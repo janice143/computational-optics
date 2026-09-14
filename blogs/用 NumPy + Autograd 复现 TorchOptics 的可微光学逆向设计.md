@@ -13,7 +13,7 @@ code-fold: show
 ::: {.callout-note title="Runnable code"}
 完整项目见 [GitHub 仓库](https://github.com/janice143/computational-optics)，代码按职责组织如下：
 
-- 完整可运行实验：[`autograd-inverse-design.ipynb`](../numerical-simulation/autograd-inverse-design.ipynb)，包含可微 ASM、Gaussian 输入与目标场、mode-overlap loss、Autograd 梯度、Adam 优化，以及最终光场和三张相位图的可视化。
+- 完整可运行实验：[`autograd-inverse-design.ipynb`](https://github.com/janice143/computational-optics/blob/master/numerical-simulation/autograd-inverse-design.ipynb)，包含可微 ASM、Gaussian 输入与目标场、mode-overlap loss、Autograd 梯度、Adam 优化，以及最终光场和三张相位图的可视化。
 - 正文中的代码片段均摘自该 notebook，并按计算链路拆分讲解。
 :::
 
